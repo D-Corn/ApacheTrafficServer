@@ -65,16 +65,17 @@ Hãy tạo một quy tắc ánh xạ với thông báo tất cả các request t
 của máy ATS tiếp nhận.
 
 Thêm dòng sau vào cuối file **remap.config**.
-> map http://**traffic_server_ip**:8080/ http://127.0.0.1:80/
+
+**map http://traffic_server_ip:8080/ http://127.0.0.1:80/**
 
 Lưu và thoát file.
 
 Khởi động lại ATS để áp dụng cấu hình với command sau:
 > $sudo traffic_ctl config reload
 
-Mở trình duyệt và truy cập đường dẫn **http://traffic_server_ip:8080/**. Nếu thấy trang bắt đàu của Apache tức là đã thành công 
-tr
-Hay nói, là một tài tài của, qua, qua, qua một khác, qua giữ, qua, qua một tài khác, qua, khác qua, qua, khi khác mới mới đăng,, mới mới đăng, mới đăng, mới đăng, mới đăng, mới cam mới, mới đăng, mới đăng, mới đăng ký đăng cam
+Mở trình duyệt và truy cập đường dẫn **http://traffic_server_ip:8080/**. Nếu thấy trang bắt đàu của Apache tức là đã thành công trong việc tạo quy tắc ánh xạ.
+
+
 
 
 
