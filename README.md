@@ -75,7 +75,23 @@ Khởi động lại ATS để áp dụng cấu hình với command sau:
 
 Mở trình duyệt và truy cập đường dẫn **http://traffic_server_ip:8080/**. Nếu thấy trang bắt đàu của Apache tức là đã thành công trong việc tạo quy tắc ánh xạ.
 
+### Bước 5: Cấu hình Traffic Server
+Trong Apache Traffic Server, file **records.config** chính là nơi cấu hình chính của ATS. Hãy đảm bảo rằng
+các option sau đã có trong file **records.config**.
+> $sudo nano /etc/trafficserrver/records.config
 
+                                            > records.config
+                                  
+                     
+> CONFIG proxy.config.http.cache.http INT 1\
+> CONFIG proxy.config.reverse_proxy.enabled INT 1\
+> CONFIG proxy.config.url_remap.remap_required INT 1\
+> CONFIG proxy.config.url_remap.pristine_host_hdr INT 0\
+> CONFIG proxy.config.http.server_ports STRING 8080 443:ssl
+Thay đổi một chút mặc định với dòng **CONFIG proxy.config.http.server_ports STRING 8080 443:ssl**.
+
+Các ption trên cho phép bộ nhớ đệm(cache) và reverse proxy và các cổng sẽ lắng nghe cho lưu lượng
+http(8080) và https(443:SSL).
 
 
 
