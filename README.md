@@ -1,4 +1,4 @@
-# [ApacheTrafficServer](https://trafficserver.apache.org/)
+# [ApacheTrafficServer](https://trafficserver.apache.org/) AS Caching Reverse Proxy
 ## Giới Thiệu
 - Apache Traffic Server là một máy chủ proxy lưu trữ (Caching Proxy Server) có khả năng mở rộng cao có khả năng xử lý khối lượng lớn các yêu cầu đồng thời trong khi duy trì độ trễ rất thấp. Nó cung cấp giải pháp phần mềm hiệu năng cao và có thể mở rộng cho cả Forward Proxy lẫn Reverse Proxy.
 - Nó có khả năng xử lý đồng thời một khối lượng lớn request trong lúc đang duy trì độ trễ rất thấp.
@@ -11,6 +11,11 @@
 - Secure(bảo mật): Hỗ trợ tích hợp HTTPS/SSL
 - Clustering(phân cụm): Hỗ trợ tích hợp cụm cho bộ nhớ cache (volume.config)
 
+## Mô hình triển khai
+<p align="center">
+  <img src="https://docs.trafficserver.apache.org/en/7.0.x/_images/httprvs.jpg"
+  <br/>
+</p>
 
 ## Cài đặt Apache Traffic Server(ATS)
 Ở lab này, chúng ta sẽ cài đặt ATS như là một Caching Reverse Proxy (máy chủ lưu trữ dưới dạng proxy ngược)
@@ -105,11 +110,23 @@ $sudo nano /etc/trafficserrver/records.config
 - Các ption trên cho phép bộ nhớ đệm(cache) và reverse proxy và các cổng sẽ lắng nghe cho lưu lượng
 http(8080) và https(443:SSL).
 
+- **Cấu hình liên quan đến bộ nhớ đệm Cache:
+
+```
+                                       records.config
  
-<p align="center">
-  <img src="https://www.google.com/search?q=traffic+server+reverse+proxy&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiRgdrZlrjmAhXxKqYKHY4NCngQ_AUoAXoECA0QAw&biw=1226&bih=641#imgrc=2-8eOajf0gG-CM">
-  <br/>
-</p>
+CONFIG proxy.config.http.cache.http INT 1
+CONFIG proxy.config.http.cache.ignore_client_cc_max_age INT 1
+CONFIG proxy.config.http.normalize_ae_gzip INT 1
+CONFIG proxy.config.http.cache.cache_responses_to_cookies INT 1
+CONFIG proxy.config.http.cache.cache_urls_that_look_dynamic INT 1
+CONFIG proxy.config.http.cache.when_to_revalidate INT 0
+CONFIG proxy.config.http.cache.required_headers INT 2
+CONFIG proxy.config.http.cache.ignore_client_no_cache INT 1
+```
+- **CONFIG proxy.config.http.cache.ignore_client_no_cache INT 1** là thiết lập cho phép chúng ta bỏ qua các clients yêu cầu no-cache và cung cấp nội dung từ bộ nhớ cache nếu có.
+- **proxy.config.http.cache.ignore_client_cc_max_age** là thiết lập cho phép Traffic Server bỏ qua bất kỳ headers **Cache-Control: max-age** từ clients.
+
 
 
 
