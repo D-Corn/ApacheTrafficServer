@@ -25,73 +25,91 @@
 - Traffic Server có sẵn trên kho mặc định của Ubuntu 18.04 nên có thể cài từ **apt-get**.
 
 - Trước hết hãy update các gói cài đặt, sử dụng các command sau:
-> $sudo apt-get update\
-> $sudo apt-get install trafficserver
-
+``` 
+ $sudo apt-get update
+ $sudo apt-get install trafficserver
+```
 - Traffic Server truy cập trên cổng 8080 theo mặc định. Tuy nhiên, muốn truy cập được vào ta phải cấu hình cho nó và cài đặt Apache2
 
 ### Bước 2: Cài đặt Web Server Apache2
 - Trên máy Cloud Server ta cài một Web Server bởi vì một Reverse Proxy hoạt động giữa người dùng và Web Server. Vậy nên ta sẽ cài đặt, ở đây ta demo Web Server Apache2.
 
 - Cài đặt apache2 bằng **apt-get** với command:
->$sudo apt-get install apache2
+```
+$sudo apt-get install apache2
+```
 ### Bước 3: Vô hiệu hoá quyền truy cập từ xa đến Web Server
 - Apache cho phép quyền kết nối tới tất cả giao diện mạng theo mặc định. Bằng cách tạo cấu hình cho nó để cho phép quyền kết nối chỉ trên giao diện loopback, bạn có thể chắc chắn rằng người dùng từ xa sẽ không thể truy cập nó được.
 
 - Mở **ports.conf** bằng **nano** để chỉnh sửa với command:
->$sudo nano /etc/apache2/ports.conf
-
+```
+$sudo nano /etc/apache2/ports.conf
+```
 - Tìm dòng chứa **Listen 80** chỉ thị và đổi nó thành:
-> Listen 127.0.0.1:80
-
+```
+Listen 127.0.0.1:80
+```
  Lưu file và thoát.
 
 - Tiếp theo, mở **apache2.conf**.
->$sudo nano /etc/apache2/apache2.conf
-
+```
+$sudo nano /etc/apache2/apache2.conf
+```
 Lưu file và thoát.
 
 - Khởi động lại Apache để áp dụng cấu hình vừa thay đổi bằng command sau:
->$sudo service apache2 restart
-
+```
+$sudo service apache2 restart
+```
 ### Bước 4: Tạo cấu hình cho Traffic Server như một Reverse Proxy
 - Để Traffic Server như một Reverse Proxy, đầu tiên ta phải ánh xạ xem máy ATS sẽ làm Reverse Proxy cho server nào. Để làm điều đó ta sẽ cấu hình 
 trong file [remap.config](https://docs.trafficserver.apache.org/en/latest/admin-guide/files/remap.config.en.html) của **trafficserver**.
 
 - Dùng **nano** với command sau:
-> $sudo nano /etc/trafficserver/remap.config
-
+```
+$sudo nano /etc/trafficserver/remap.config
+```
 - Hãy tạo một quy tắc ánh xạ với thông báo tất cả các request truy cập vào địa chỉ IP của máy chủ gốc 127.0.0.1:80 sẽ được địa chỉ IP
 của máy ATS tiếp nhận.
 
 - Thêm dòng sau vào cuối file **remap.config**.
-
-**map http://traffic_server_ip:8080/ http://127.0.0.1:80/**
-
+```
+map http://traffic_server_ip:8080/ http://127.0.0.1:80/
+```
 Lưu và thoát file.
 
 - Khởi động lại ATS để áp dụng cấu hình với command sau:
-> $sudo traffic_ctl config reload
-
+```
+$sudo traffic_ctl config reload
+```
 - Mở trình duyệt và truy cập đường dẫn **http://traffic_server_ip:8080/**. Nếu thấy trang bắt đàu của Apache tức là đã thành công trong việc tạo quy tắc ánh xạ.
 
 ### Bước 5: Cấu hình Traffic Server
 - Trong Apache Traffic Server, file **records.config** chính là nơi cấu hình chính của ATS. Hãy đảm bảo rằng
 các option sau đã có trong file **records.config**.
-> $sudo nano /etc/trafficserrver/records.config
-
-                                            > records.config
+```
+$sudo nano /etc/trafficserrver/records.config
+```
+```
+                                             records.config
                                   
                      
-> CONFIG proxy.config.http.cache.http INT 1\
-> CONFIG proxy.config.reverse_proxy.enabled INT 1\
-> CONFIG proxy.config.url_remap.remap_required INT 1\
-> CONFIG proxy.config.url_remap.pristine_host_hdr INT 0\
-> CONFIG proxy.config.http.server_ports STRING 8080 443:ssl
+ CONFIG proxy.config.http.cache.http INT 1
+ CONFIG proxy.config.reverse_proxy.enabled INT 1
+ CONFIG proxy.config.url_remap.remap_required INT 1
+ CONFIG proxy.config.url_remap.pristine_host_hdr INT 0
+ CONFIG proxy.config.http.server_ports STRING 8080 443:ssl
+```
 - Thay đổi một chút mặc định với dòng **CONFIG proxy.config.http.server_ports STRING 8080 443:ssl**.
 
 - Các ption trên cho phép bộ nhớ đệm(cache) và reverse proxy và các cổng sẽ lắng nghe cho lưu lượng
 http(8080) và https(443:SSL).
+
+ 
+<p align="center">
+  <img src="https://www.google.com/search?q=traffic+server+reverse+proxy&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiRgdrZlrjmAhXxKqYKHY4NCngQ_AUoAXoECA0QAw&biw=1226&bih=641#imgrc=2-8eOajf0gG-CM">
+  <br/>
+</p>
 
 
 
