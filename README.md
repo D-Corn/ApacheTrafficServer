@@ -95,7 +95,7 @@ các option sau đã có trong file **records.config**.
 ```
 $sudo nano /etc/trafficserrver/records.config
 ```
-```ssh
+```
                                              records.config
                                   
                      
@@ -112,7 +112,7 @@ http(8080) và https(443:SSL).
 
 **Cấu hình liên quan đến bộ nhớ đệm Cache:**
 
-```ssh
+```
                                        records.config
  
 CONFIG proxy.config.http.cache.http INT 1
@@ -122,8 +122,8 @@ CONFIG proxy.config.http.cache.cache_responses_to_cookies INT 1
 CONFIG proxy.config.http.cache.cache_urls_that_look_dynamic INT 1
 CONFIG proxy.config.http.cache.when_to_revalidate INT 0
 CONFIG proxy.config.http.cache.required_headers INT 2
-CONFIG proxy.config.http.cache.ignore_client_no_cache INT 1
-```
+CONFIG proxy.config.http.cache.ignore_client_no_cache INT 1```
+
 ```CONFIG proxy.config.http.cache.ignore_client_no_cache INT 1``` là thiết lập cho phép chúng ta bỏ qua các clients yêu cầu no-cache và cung cấp nội dung từ bộ nhớ cache nếu có.
 ```proxy.config.http.cache.ignore_client_cc_max_age``` là thiết lập cho phép Traffic Server bỏ qua bất kỳ headers **Cache-Control: max-age** từ clients.
 
