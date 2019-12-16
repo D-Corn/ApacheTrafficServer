@@ -110,7 +110,7 @@ $sudo nano /etc/trafficserrver/records.config
 - Các ption trên cho phép bộ nhớ đệm(cache) và reverse proxy và các cổng sẽ lắng nghe cho lưu lượng
 http(8080) và https(443:SSL).
 
-- **Cấu hình liên quan đến bộ nhớ đệm Cache:
+**Cấu hình liên quan đến bộ nhớ đệm Cache:**
 
 ```
                                        records.config
@@ -124,12 +124,40 @@ CONFIG proxy.config.http.cache.when_to_revalidate INT 0
 CONFIG proxy.config.http.cache.required_headers INT 2
 CONFIG proxy.config.http.cache.ignore_client_no_cache INT 1
 ```
-- **CONFIG proxy.config.http.cache.ignore_client_no_cache INT 1** là thiết lập cho phép chúng ta bỏ qua các clients yêu cầu no-cache và cung cấp nội dung từ bộ nhớ cache nếu có.
-- **proxy.config.http.cache.ignore_client_cc_max_age** là thiết lập cho phép Traffic Server bỏ qua bất kỳ headers **Cache-Control: max-age** từ clients.
+```CONFIG proxy.config.http.cache.ignore_client_no_cache INT 1``` là thiết lập cho phép chúng ta bỏ qua các clients yêu cầu no-cache và cung cấp nội dung từ bộ nhớ cache nếu có.
+```proxy.config.http.cache.ignore_client_cc_max_age``` là thiết lập cho phép Traffic Server bỏ qua bất kỳ headers **Cache-Control: max-age** từ clients.
 
+**Cấu hình lưu trữ Storage**
+- Trong Traffic Server, file ```storage.config``` là file định dạng lưu trữ cho cache.
+- Dùng nano mở file storage.config:
+```
+$sudo nano /etc/trafficserver/storage.config
+ ```                            
+```
 
+/var/cache/trafficserver 256M```
 
+```
+- Chúng ta sẽ thấy 1 dòng mặc định như ở trên, ở đây bộ nhớ lưu trữ của cache mặc định ban đầu sẽ là 256Mb.
+### Một số tools
+- Như vậy, các cấu hình ở trên và những cấu hình mặc định bên trong các file config của TrafficServer đã giúp ta cấu hình được cơ bản về Apache Traffic Server.
+- Sau khi cấu hình, ta cần reload lại Traffic Server. Để làm điều này ta có thể sử dụng câu lệnh: 
+```
+$sudo /etc/init.d/trafficserver restart
+```
+Hoặc cũng có thể dùng ```traffic_ctl``` có sẵn của ATS
+```
+traffic_ctl config reload
+```
+- Chúng ta cũng có thể sử dụng tool ```traffic_top``` để xem tổng quan về bộ đệm ẩn.
+Và một số công cụ khác cần tham khảo qua [Command Line Utilities](https://docs.trafficserver.apache.org/en/latest/appendices/command-line/index.en.html) trên Docs của Apache Traffic Server.
 
+## Kết luận
+  Apache Traffic Server là một nền tảng Proxy lưu trữ ổn định, nhanh và có thể mở rộng. Bằng chứng chính là nó đã được Yahoo sử dụng để giải quyết rất nhiều request vào thời điểm Yahoo còn vận hành.
+  
+  Và việc cài đặt cơ bản về ATS cũng khá dễ hiểu, nhưng để có thể nắm vững về ATS và các options của nó thì sẽ cần nhiều thời gian để giải quyết.
+  
+  Bài viết chỉ là bước đệm đơn giản để nghiên cứu về ATS  và còn thiếu rất nhiều thứ cũng như c
 
 
 
