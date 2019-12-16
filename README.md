@@ -94,7 +94,8 @@ $sudo traffic_ctl config reload
 các option sau đã có trong file **records.config**.
 ```
 $sudo nano /etc/trafficserrver/records.config
-```
+``` 
+
 ```
                                              records.config
                                   
@@ -122,17 +123,18 @@ CONFIG proxy.config.http.cache.cache_responses_to_cookies INT 1
 CONFIG proxy.config.http.cache.cache_urls_that_look_dynamic INT 1
 CONFIG proxy.config.http.cache.when_to_revalidate INT 0
 CONFIG proxy.config.http.cache.required_headers INT 2
-CONFIG proxy.config.http.cache.ignore_client_no_cache INT 1```
+CONFIG proxy.config.http.cache.ignore_client_no_cache INT 1
+``` 
 
-```CONFIG proxy.config.http.cache.ignore_client_no_cache INT 1``` là thiết lập cho phép chúng ta bỏ qua các clients yêu cầu no-cache và cung cấp nội dung từ bộ nhớ cache nếu có.
-```proxy.config.http.cache.ignore_client_cc_max_age``` là thiết lập cho phép Traffic Server bỏ qua bất kỳ headers **Cache-Control: max-age** từ clients.
+**CONFIG proxy.config.http.cache.ignore_client_no_cache INT 1** là thiết lập cho phép chúng ta bỏ qua các clients yêu cầu no-cache và cung cấp nội dung từ bộ nhớ cache nếu có.
+**proxy.config.http.cache.ignore_client_cc_max_age** là thiết lập cho phép Traffic Server bỏ qua bất kỳ headers **Cache-Control: max-age** từ clients.
 
 **Cấu hình lưu trữ Storage**
 - Trong Traffic Server, file ```storage.config``` là file định dạng lưu trữ cho cache.
 - Dùng nano mở file storage.config:
 ```
 $sudo nano /etc/trafficserver/storage.config
- ```                            
+ ```                               
 ```
 
 /var/cache/trafficserver 256M
@@ -148,7 +150,8 @@ $sudo /etc/init.d/trafficserver restart
 Hoặc cũng có thể dùng ```traffic_ctl``` có sẵn của ATS
 ```
 traffic_ctl config reload
-```
+``` 
+
 - Chúng ta cũng có thể sử dụng tool ```traffic_top``` để xem tổng quan về bộ đệm ẩn.
 Và một số công cụ khác cần tham khảo qua [Command Line Utilities](https://docs.trafficserver.apache.org/en/latest/appendices/command-line/index.en.html) trên Docs của Apache Traffic Server.
 
@@ -157,7 +160,7 @@ Và một số công cụ khác cần tham khảo qua [Command Line Utilities](h
   
   Và việc cài đặt cơ bản về ATS cũng khá dễ hiểu, nhưng để có thể nắm vững về ATS và các options của nó thì sẽ cần nhiều thời gian để giải quyết.
   
-  Bài viết chỉ là bước đệm đơn giản để nghiên cứu về ATS  và còn thiếu rất nhiều thứ cũng như c
+  Bài viết chỉ là bước đệm đơn giản để nghiên cứu về ATS  và còn thiếu rất nhiều thứ cũng như cần chỉnh sửa.
 
 
 
