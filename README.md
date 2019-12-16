@@ -135,7 +135,7 @@ $sudo nano /etc/trafficserver/storage.config
  ```                            
 ```
 
-/var/cache/trafficserver 256M```
+/var/cache/trafficserver 256M
 
 ```
 - Chúng ta sẽ thấy 1 dòng mặc định như ở trên, ở đây bộ nhớ lưu trữ của cache mặc định ban đầu sẽ là 256Mb.
