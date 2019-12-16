@@ -1,4 +1,4 @@
-# [ApacheTrafficServer](https://trafficserver.apache.org/) AS Caching Reverse Proxy
+# [ApacheTrafficServer](https://trafficserver.apache.org/)  Caching Reverse Proxy
 ## Giới Thiệu
 - Apache Traffic Server là một máy chủ proxy lưu trữ (Caching Proxy Server) có khả năng mở rộng cao có khả năng xử lý khối lượng lớn các yêu cầu đồng thời trong khi duy trì độ trễ rất thấp. Nó cung cấp giải pháp phần mềm hiệu năng cao và có thể mở rộng cho cả Forward Proxy lẫn Reverse Proxy.
 - Nó có khả năng xử lý đồng thời một khối lượng lớn request trong lúc đang duy trì độ trễ rất thấp.
