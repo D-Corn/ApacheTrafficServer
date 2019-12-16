@@ -91,10 +91,12 @@ $sudo traffic_ctl config reload
 
 ### Bước 5: Cấu hình Traffic Server
 - Trong Apache Traffic Server, file **records.config** chính là nơi cấu hình chính của ATS. Hãy đảm bảo rằng
-các option sau đã có trong file **records.config**.
+các option sau đã có trong file **records.config**. 
+ 
 ```
 $sudo nano /etc/trafficserrver/records.config
-``` 
+```  
+
 
 ```
                                              records.config
@@ -126,15 +128,16 @@ CONFIG proxy.config.http.cache.required_headers INT 2
 CONFIG proxy.config.http.cache.ignore_client_no_cache INT 1
 ``` 
 
-**CONFIG proxy.config.http.cache.ignore_client_no_cache INT 1** là thiết lập cho phép chúng ta bỏ qua các clients yêu cầu no-cache và cung cấp nội dung từ bộ nhớ cache nếu có.
-**proxy.config.http.cache.ignore_client_cc_max_age** là thiết lập cho phép Traffic Server bỏ qua bất kỳ headers **Cache-Control: max-age** từ clients.
+``CONFIG proxy.config.http.cache.ignore_client_no_cache INT 1`` là thiết lập cho phép chúng ta bỏ qua các clients yêu cầu no-cache và cung cấp nội dung từ bộ nhớ cache nếu có. 
+``proxy.config.http.cache.ignore_client_cc_max_age`` là thiết lập cho phép Traffic Server bỏ qua bất kỳ headers **Cache-Control: max-age** từ clients.
 
 **Cấu hình lưu trữ Storage**
 - Trong Traffic Server, file ```storage.config``` là file định dạng lưu trữ cho cache.
 - Dùng nano mở file storage.config:
 ```
 $sudo nano /etc/trafficserver/storage.config
- ```                               
+``` 
+
 ```
 
 /var/cache/trafficserver 256M
@@ -146,14 +149,15 @@ $sudo nano /etc/trafficserver/storage.config
 - Sau khi cấu hình, ta cần reload lại Traffic Server. Để làm điều này ta có thể sử dụng câu lệnh: 
 ```
 $sudo /etc/init.d/trafficserver restart
-```
+``` 
 Hoặc cũng có thể dùng ```traffic_ctl``` có sẵn của ATS
 ```
 traffic_ctl config reload
-``` 
+```  
 
 - Chúng ta cũng có thể sử dụng tool ```traffic_top``` để xem tổng quan về bộ đệm ẩn.
 Và một số công cụ khác cần tham khảo qua [Command Line Utilities](https://docs.trafficserver.apache.org/en/latest/appendices/command-line/index.en.html) trên Docs của Apache Traffic Server.
+
 
 ## Kết luận
   Apache Traffic Server là một nền tảng Proxy lưu trữ ổn định, nhanh và có thể mở rộng. Bằng chứng chính là nó đã được Yahoo sử dụng để giải quyết rất nhiều request vào thời điểm Yahoo còn vận hành.
