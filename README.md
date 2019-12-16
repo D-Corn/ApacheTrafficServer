@@ -95,7 +95,7 @@ các option sau đã có trong file **records.config**.
 ```
 $sudo nano /etc/trafficserrver/records.config
 ```
-```
+```ssh
                                              records.config
                                   
                      
@@ -112,7 +112,7 @@ http(8080) và https(443:SSL).
 
 **Cấu hình liên quan đến bộ nhớ đệm Cache:**
 
-```
+```ssh
                                        records.config
  
 CONFIG proxy.config.http.cache.http INT 1
